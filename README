@@ -1,0 +1,33 @@
+
+Most of the Rails websites we deploy have a similar configs.
+At Newfangled we employ Apache rewrite rules to keep our page caching clean and simple. The regular expression for defining the rewrite rule can be a bit hard to remember, and we are constantly tweaking it. 
+
+Tested and deployed on Apache 2.2+ on CentOS
+
+h2. ErrorDocument
+
+A lot of the websites we write are replacing php sites. Consequently there are legacy urls with the .php extension. Assuming that php is installed on the server, accessing a legacy php url will bypass Rails and render the default "no file of  name". 
+
+* This isn't useful to the user.
+* It's not pretty, as Apache will render a bare page. 
+* Users will think they have "broken the website".
+
+Via ErrorDocument we can render a "smarter page". 
+This assumes that you have routes in your Rails app to handle 404 and 403 errors.
+Since we are now back in the Rails stack, we can be more useful to what we display to users. Ie: offer search results, or at the very least the page that is rendered will be consistent with the rest of the site.
+
+After editing the config file, you should test it with Apaches configtest utiltiy.
+
+run "apachectl -t"
+
+If everything is fine it will return "Syntax OK". If not it will return information on the errors it found. 
+
+
+This will only parse the active config file used by Apache. If you want it to parse a config file that your editing elsewhere on your machine you can either…
+* move the file into the config directory. /etc/httpd/config.d, or /etc/apache2/config.d
+* Tell Apache to look at your alternate config file. It will then parse your config file before accepting it
+
+	"apachectl -f /path/to/your/file
+
+
+
