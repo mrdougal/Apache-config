@@ -4,6 +4,16 @@ At Newfangled we employ Apache rewrite rules to keep our page caching clean and 
 
 Tested and deployed on Apache 2.2+ on CentOS
 
+h2. Rewrite Rules
+
+We extensively use Rails page caching. We write our page cache into public/cache, which makes it easy to expire the entire cache on the site. The "fingertips guys":http://www.fngtps.com/2006/01/lazy-sweeping-the-rails-page-cache
+explains it well.
+
+Our sites generate javascript which is page cached, so we have added in a line to apache look for js files.
+Having a wildcard for the file extensions means, apache will not look inside ??public/javascripts?? or ??public/stylesheets"" but instead will look in ??public/cache/javascripts?? or ??public/cache/stylesheets?? and will return a 404. Resulting in plain looking pages.
+
+
+
 h2. ErrorDocument
 
 A lot of the websites we write are replacing php sites. Consequently there are legacy urls with the .php extension. Assuming that php is installed on the server, accessing a legacy php url will bypass Rails and render the default "no file of  name". 
@@ -24,11 +34,7 @@ After editing the config file, you should test it with Apaches configtest utilti
 If everything is fine it will return "Syntax OK". If not it will return information on the errors it found. 
 This will only parse the active config file used by Apache. 
 
-h3. If you want to parse a config file outside of the apache config directory
+To parse a config file outside of the apache config directory
 
-Assuming that you want to run the test locally before you upload the file or edit the config on your production box.
-
-Move the file into the config directory, then run the test. 
-Apache config is typcially in ??/etc/httpd/config.d??, or ??/etc/apache2/config.d??
-*Make sure you back up your files first*
+??apachectl -t -f /path/to/your/config/file??
 
