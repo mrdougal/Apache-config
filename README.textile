@@ -18,16 +18,17 @@ Since we are now back in the Rails stack, we can be more useful to what we displ
 
 After editing the config file, you should test it with Apaches configtest utiltiy.
 
-run "apachectl -t"
+??apachectl -t??
+
 
 If everything is fine it will return "Syntax OK". If not it will return information on the errors it found. 
+This will only parse the active config file used by Apache. 
 
+h3. If you want to parse a config file outside of the apache config directory
 
-This will only parse the active config file used by Apache. If you want it to parse a config file that your editing elsewhere on your machine you can either…
-* move the file into the config directory. /etc/httpd/config.d, or /etc/apache2/config.d
-* Tell Apache to look at your alternate config file. It will then parse your config file before accepting it
+Assuming that you want to run the test locally before you upload the file or edit the config on your production box.
 
-	"apachectl -f /path/to/your/file
-
-
+Move the file into the config directory, then run the test. 
+Apache config is typcially in ??/etc/httpd/config.d??, or ??/etc/apache2/config.d??
+*Make sure you back up your files first*
 
