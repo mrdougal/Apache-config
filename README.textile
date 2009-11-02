@@ -6,8 +6,7 @@ Tested and deployed on Apache 2.2+ on CentOS
 
 h2. Rewrite Rules
 
-We extensively use Rails page caching. We write our page cache into public/cache, which makes it easy to expire the entire cache on the site. The "fingertips guys":http://www.fngtps.com/2006/01/lazy-sweeping-the-rails-page-cache
-explains it well.
+We extensively use Rails page caching. We write our page cache into public/cache, which makes it easy to expire the entire cache on the site. The "fingertips guys":http://www.fngtps.com/2006/01/lazy-sweeping-the-rails-page-cache explain it well.
 
 Our sites generate javascript which is page cached, so we have added in a line to apache look for js files.
 Having a wildcard for the file extensions means, apache will not look inside ??public/javascripts?? or ??public/stylesheets"" but instead will look in ??public/cache/javascripts?? or ??public/cache/stylesheets?? and will return a 404. Resulting in plain looking pages.
